@@ -12,12 +12,16 @@ function bundle(file){
         else{
             var bundle = JSON.parse(data);
 
-            //console.log(bundle.entry[0].resource.id);
+            
             var dataTypes = bundle.entry;
             var attributes = dataTypes
 
             var resources = {}
              var extends_ = {}
+
+            var backboneElements = []
+            
+            
             
             for (var i = 0; i < dataTypes.length; i++){
                 var resourceId = dataTypes[i].resource.id;
@@ -66,27 +70,73 @@ function bundle(file){
                 }
                 }
                 else{
-                    //console.log(dataTypes[i]);
+                   
                 }
                 
                 
             }
-            //console.log(dataTypes[0].resource.element[0].type[0].code);
+           
+
+            var regexLowerCase = /^[a-z]/;
+            var firstDefinition = true;
+            
+                for (key in resources){
+                    if (extends_[key] == null){
+                        backboneElements.push(resource);
+                        
+                             
+                            for (var i = 0; i < backboneElements.length; i++){
+                                if (firstDefinition){
+                                 console.log("class " + key +"{");
+                                 firstDefinition = false;
+                                }
+                                else {
+                                    console.log("\nclass " + key +"{");
+                                }
+
+                                 var BackboneProps = resources[key]
+                                for(var i = 0; i<BackboneProps.length;i++) {
+                                 console.log("\t" + BackboneProps[i].name + ":" +BackboneProps[i].type + ";");
+                                 
+                                }
+                            
+                                console.log("\tresourceType: string\n}")
+                            }
+                    }
+
+                }
+
+                   
 
             for(key in resources) {
-                if (extends_[key] == null){
-                    console.log("}\n\nclass " + key +"{")
-                }
-                else{
-                    console.log("}\n\nclass " + key + " extends " + extends_[key] + "{" )
-                }
+            
+                        if (key.match(regexLowerCase) || extends_[key] == null){
+                            continue;
+                        }
+                        
+                    
+                        else{
+                         if (key.match(/Range|Account|Location/)){
+                                var match11 = key.match(/Range|Account|Location/);
+                            console.log("\n\n export class " + 'FHIR'+ match11 + " extends " + extends_[key] + "{" );
+                            }
+                            else{
+                            console.log("\n\n export class " + key + " extends " + extends_[key] + "{" );
+                            }
+                        }
+                    
                 var props = resources[key]
-                for(var i = 0; i<props.length;i++) {
-                    console.log("\t" + props[i].name + ":" + props[i].type + ";")
-                }
+                for(var i = 1; i<props.length;i++) {
+                    console.log("\t" + props[i].name + ":" + props[i].type + ";");
+                   
+                };
+
+                console.log("}")
+                
             }
             
-
+            
+    
         } 
     })
 };
