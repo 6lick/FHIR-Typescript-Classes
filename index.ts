@@ -1,5 +1,6 @@
-import { Observation, FHIRAccount, ValueSet } from './tsInterfaces'
-import * as resources from './tsInterfaces'
+//import { Observation, FHIRAccount, ValueSet } from './tsInterfaces'
+//import * as resources from './tsInterfaces'
+import * as resources from './tmp'
 
 let test = `{
                     "resourceType": "Observation",
@@ -56,7 +57,7 @@ export function tester(test){
     switch(type_){
         
                      case 'DataElement':
-                         foo = fhirObs as resources.fhirElement;
+                         foo = fhirObs as resources.DataElement;
                          break;
                      case 'Period':
                         foo = fhirObs as resources.Period;
@@ -94,8 +95,8 @@ export function tester(test){
                     case 'Signature':
                         foo = fhirObs as resources.Signature;
                     break;
-                    case 'fhirElementDefinition':
-                        foo = fhirObs as resources.fhirElementDefinition;
+                    case 'ElementDefinition':
+                        foo = fhirObs as resources.ElementDefinition;
                     break;
                     case 'Timing':
                         foo = fhirObs as resources.Timing;
@@ -115,8 +116,8 @@ export function tester(test){
                     case 'Extension':
                         foo = fhirObs as resources.Extension;
                     break;
-                    case 'BackbonefhirElement':
-                        foo = fhirObs as resources.BackbonefhirElement;
+                    case 'BackboneElement':
+                        foo = fhirObs as resources.BackboneElement;
                     break;
                     case 'Narrative':
                         foo = fhirObs as resources.Narrative;
@@ -292,8 +293,8 @@ export function tester(test){
                     case 'DocumentManifest':
                         foo = fhirObs as resources.DocumentManifest;
                     break;
-                    case 'DatafhirElement':
-                        foo = fhirObs as resources.DatafhirElement;
+                    case 'DataElement':
+                        foo = fhirObs as resources.DataElement;
                     break;
                     case 'EligibilityRequest':
                         foo = fhirObs as resources.EligibilityRequest;
@@ -359,7 +360,7 @@ export function tester(test){
                         foo = fhirObs as resources.EnrollmentRequest;
                     break;
                     case 'Location':
-                        foo = fhirObs as resources.FHIRlocation;
+                        foo = fhirObs as resources.FHIRLocation;
                     break;
                     case 'ExplanationOfBenefit':
                         foo = fhirObs as resources.ExplanationOfBenefit;

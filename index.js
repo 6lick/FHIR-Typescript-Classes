@@ -46,7 +46,7 @@ function tester(test) {
         case 'Signature':
             foo = fhirObs;
             break;
-        case 'fhirElementDefinition':
+        case 'ElementDefinition':
             foo = fhirObs;
             break;
         case 'Timing':
@@ -67,7 +67,7 @@ function tester(test) {
         case 'Extension':
             foo = fhirObs;
             break;
-        case 'BackbonefhirElement':
+        case 'BackboneElement':
             foo = fhirObs;
             break;
         case 'Narrative':
@@ -244,7 +244,7 @@ function tester(test) {
         case 'DocumentManifest':
             foo = fhirObs;
             break;
-        case 'DatafhirElement':
+        case 'DataElement':
             foo = fhirObs;
             break;
         case 'EligibilityRequest':

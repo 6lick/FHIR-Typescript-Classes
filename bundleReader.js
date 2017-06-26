@@ -1,7 +1,8 @@
 var fs = require('fs');
 
 
-var file = "dataelements.json";
+//var file = "dataelements.json";
+var file = process.argv[2];
 
 function bundle(file){
     fs.readFile(file, 'utf8', function (err, data){
@@ -20,6 +21,8 @@ function bundle(file){
              var extends_ = {}
 
             var backboneElements = []
+
+            var classComments = {};
             
             
             
@@ -68,14 +71,16 @@ function bundle(file){
                      var whateItExtends =  dataTypes[i].resource.element[0].type[0].code.match(regexEXT)
                         extends_[resource] = whateItExtends
                 }
-                }
-                else{
-                   
+                //getting documentation 
+                if (dataTypes[i].resource.element[0].definition && dataTypes[i].resource.element[0].comments){
+                                var definition = dataTypes[i].resource.element[0].definition
+                                var comment = dataTypes[i].resource.element[0].comments
+                                classComments[resource] = {def: definition, com: comment}
+                            }
                 }
                 
-                
+               
             }
-           
 
             var regexLowerCase = /^[a-z]/;
             var firstDefinition = true;
@@ -113,16 +118,18 @@ function bundle(file){
                         if (key.match(regexLowerCase) || extends_[key] == null){
                             continue;
                         }
-                        
-                    
                         else{
                          if (key.match(/Range|Account|Location/)){
+                                console.log("/*" + classComments[key].def + "\n" + classComments[key].com +"*/")
                                 var match11 = key.match(/Range|Account|Location/);
-                            console.log("\n\n export class " + 'FHIR'+ match11 + " extends " + extends_[key] + "{" );
+                                console.log("\n\n export class " + 'FHIR'+ match11 + " extends " + extends_[key] + "{" );
                             }
                             else{
-                            console.log("\n\n export class " + key + " extends " + extends_[key] + "{" );
-                            }
+                                console.log("/*" + classComments[key].def + "\n" + classComments[key].com +"*/")
+                                console.log("export class " + key + " extends " + extends_[key] + "{" );
+                        }
+                      
+                        
                         }
                     
                 var props = resources[key]
