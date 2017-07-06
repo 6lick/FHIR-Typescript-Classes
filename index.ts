@@ -412,7 +412,7 @@ export function tester(test){
                     break;
                         }
 
-   
+    
 
     return JSON.stringify(foo)
 

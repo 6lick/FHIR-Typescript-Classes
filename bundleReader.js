@@ -3,6 +3,10 @@ var fs = require('fs');
 
 //var file = "dataelements.json";
 var file = process.argv[2];
+if (process.argv.length < 3) {
+  console.log('Usage: node ' + process.argv[1] + ' FILENAME');
+  process.exit(1);
+}
 
 function bundle(file){
     fs.readFile(file, 'utf8', function (err, data){
@@ -17,14 +21,14 @@ function bundle(file){
             var dataTypes = bundle.entry;
             var attributes = dataTypes
 
-            var resources = {}
-             var extends_ = {}
+            var resources = {};
+            var extends_ = {};
 
-            var backboneElements = []
+            var backboneElements = [];
 
             var classComments = {};
             
-            
+            var isArray = false;
             
             for (var i = 0; i < dataTypes.length; i++){
                 var resourceId = dataTypes[i].resource.id;
@@ -60,11 +64,17 @@ function bundle(file){
                     code = code.replace(/id|code|uri|markdown|display|version|xhtml|oid|base64Binary|instant/ , "string");
                     code = code.replace(/positiveInt|unsignedInt|decimal|integer/, "number");
                     code = code.replace(/dateTime|date|time/, "Date");
+
+                    var max = dataTypes[i].resource.element[0].max;
+                    if (max == "*"){
+                        code = code + "[]"
+                    }
  
                  resources[resource].push({
                      name: name,
                      type: code
-                 })
+                 });
+                 
                   //getting extention
                     var regexEXT = /^\w+$/
                     if(resourceId.match(regexEXT)){
@@ -92,11 +102,11 @@ function bundle(file){
                              
                             for (var i = 0; i < backboneElements.length; i++){
                                 if (firstDefinition){
-                                 console.log("class " + key +"{");
+                                 console.log("export class " + key +"{");
                                  firstDefinition = false;
                                 }
                                 else {
-                                    console.log("\nclass " + key +"{");
+                                    console.log("\n export class " + key +"{");
                                 }
 
                                  var BackboneProps = resources[key]

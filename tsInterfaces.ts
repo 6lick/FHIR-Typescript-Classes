@@ -1,4 +1,5 @@
 
+
 export class fhirElement  {
 	resourceType: string;
 	id: string;
@@ -2520,7 +2521,7 @@ export class Person extends DomainResource{
 	link:BackbonefhirElement;
 }
 
-export class DiagnosticOrder extends DomainResource{
+ class DiagnosticOrder extends DomainResource{
 	link:DomainResource;
 	id:string;
 	meta:Meta;

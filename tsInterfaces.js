@@ -949,4 +949,3 @@ var DiagnosticOrder = (function (_super) {
     }
     return DiagnosticOrder;
 }(DomainResource));
-exports.DiagnosticOrder = DiagnosticOrder;
